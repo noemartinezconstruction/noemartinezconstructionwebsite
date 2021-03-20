@@ -6,14 +6,16 @@ import "./Card.css";
 
 class Card extends React.Component {
   routeToScheduler = () => {
-    const { addOrdType, image, title, history } = this.props;
+    const { addOrdType, image, title, history, language } = this.props;
 
     history.push("/scheduler");
     addOrdType({
       image,
       title,
       text:
-        "Click this image once you are done entering your first name, last name, phone number, address, and email to order your service.",
+        language === "english"
+          ? "Click this image once you are done entering your first name, last name, phone number, address, and email to order your service."
+          : "Preciona esta imagen cuando acabes de darnos tus datos para confirmar tu cita.",
     });
   };
 

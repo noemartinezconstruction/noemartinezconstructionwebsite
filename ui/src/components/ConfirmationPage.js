@@ -1,4 +1,5 @@
 import React from "react";
+import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
 import Success from "./success";
 import "./ConfirmationPage.css";
@@ -8,16 +9,16 @@ class ConfirmationPage extends React.Component {
     this.props.history.push("/");
   };
   render() {
+    const { language } = this.props;
     return (
       <div className="container">
         <div className="row">
           <div className="col">
             <h2>
-              Your service has been ordered! We will call you to schedule an
-              appointment with you to install your service!
+              {language === "english"
+                ? "Your service has been ordered! We will call you to schedule an appointment with you to install your service!"
+                : "Tu servicio a sido procesado te llamaremos en una hora"}
             </h2>
-            <h4 className="phone-number">202-562-6656</h4>
-            <h1 className="phone-number">Your order number is 5354992</h1>
 
             <div className="goback-main-menu-flex-box">
               <button
@@ -25,7 +26,9 @@ class ConfirmationPage extends React.Component {
                 type="button"
                 onClick={this.routeToMainMenu}
               >
-                Click to go back to main menu
+                {language === "english"
+                  ? "Click to go back to main menu"
+                  : "Preciona aqui para regresar al menu principal"}
               </button>
             </div>
             <Success />
@@ -36,4 +39,10 @@ class ConfirmationPage extends React.Component {
   }
 }
 
-export default withRouter(ConfirmationPage);
+function mapStateToProps(state) {
+  return {
+    language: state.languagesReducer.language,
+  };
+}
+
+export default withRouter(connect(mapStateToProps, null)(ConfirmationPage));

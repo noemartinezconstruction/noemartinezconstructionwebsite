@@ -13,6 +13,8 @@ class Scheduler extends React.Component {
     lastName: "",
     error:
       "You need to enter your first name, last name, phone number, address and email to order a service.",
+    errorSpanish:
+      "Necesitas darnos tu nombre, apellido, telefono, domicilio, y email para hacer una cita.",
     formError: false,
     phoneNumber: "",
     processing: false,
@@ -59,6 +61,7 @@ class Scheduler extends React.Component {
   };
   render() {
     const { text, image, title } = this.props.orderType;
+    const { language } = this.props;
     const {
       address,
       email,
@@ -68,19 +71,28 @@ class Scheduler extends React.Component {
       formError,
       phoneNumber,
       processing,
+      errorSpanish,
     } = this.state;
 
     return (
       <React.Fragment>
         {processing ? (
           <div className="container">
-            <h2 className="processing-request-header">...Processing Request</h2>
+            <h2 className="processing-request-header">
+              {language === "english"
+                ? "...Processing Request"
+                : "...Procesando tu informacion"}
+            </h2>
           </div>
         ) : (
           <div className="container">
             <div className="row">
               <div className="col">
-                <h2>Order your service</h2>
+                <h2>
+                  {language === "english"
+                    ? "Order your service"
+                    : "Ordena tu servicio"}
+                </h2>
               </div>
             </div>
             <div className="row">
@@ -90,7 +102,9 @@ class Scheduler extends React.Component {
                   type="button"
                   onClick={this.routeToRoot}
                 >
-                  Click to order a different service
+                  {language === "english"
+                    ? "Click to order a different service"
+                    : "Preciona aqui para ordenar un servicio diferente"}
                 </button>
               </div>
             </div>
@@ -107,13 +121,18 @@ class Scheduler extends React.Component {
               <div className="col">
                 <div className="enter-details-flexbox">
                   <h3 className="enter-details-header">
-                    Enter your first name, last name, phone number, address, and
-                    email.
+                    {language === "english"
+                      ? "Enter your first name, last name, phone number, address, and email"
+                      : "Entra tu nombre, apellido, numero de telefono, domicilio, y email"}
                   </h3>
                   <input
                     type="text"
                     name="name"
-                    placeholder="Enter your name"
+                    placeholder={
+                      language === "english"
+                        ? "Enter your name"
+                        : "Entra nu nombre"
+                    }
                     className="input-text"
                     onChange={this.setValue}
                     value={name}
@@ -121,7 +140,11 @@ class Scheduler extends React.Component {
                   <input
                     type="text"
                     name="lastName"
-                    placeholder="Enter your last name"
+                    placeholder={
+                      language === "english"
+                        ? "Enter your last name"
+                        : "Entra tu apellido"
+                    }
                     className="input-text"
                     onChange={this.setValue}
                     value={lastName}
@@ -129,7 +152,11 @@ class Scheduler extends React.Component {
                   <input
                     type="tel"
                     name="phoneNumber"
-                    placeholder="Enter your phone number"
+                    placeholder={
+                      language === "english"
+                        ? "Enter your phone number"
+                        : "Entra tu telefono"
+                    }
                     className="input-text"
                     onChange={this.setValue}
                     value={phoneNumber}
@@ -137,7 +164,11 @@ class Scheduler extends React.Component {
                   <input
                     type="text"
                     name="address"
-                    placeholder="Enter your address"
+                    placeholder={
+                      language === "english"
+                        ? "Enter your address"
+                        : "Entra tu domicilio"
+                    }
                     className="input-text"
                     onChange={this.setValue}
                     value={address}
@@ -145,12 +176,20 @@ class Scheduler extends React.Component {
                   <input
                     type="text"
                     name="email"
-                    placeholder="Enter your email"
+                    placeholder={
+                      language === "english"
+                        ? "Enter your email"
+                        : "Entra tu email"
+                    }
                     className="input-text"
                     onChange={this.setValue}
                     value={email}
                   />
-                  {formError ? <p className="error-text">{error}</p> : null}
+                  {formError ? (
+                    <p className="error-text">
+                      {language === "english" ? error : errorSpanish}
+                    </p>
+                  ) : null}
                 </div>
               </div>
             </div>
@@ -164,6 +203,7 @@ class Scheduler extends React.Component {
 function mapStateToProps(state) {
   return {
     orderType: state.ordersReducer.orderType,
+    language: state.languagesReducer.language,
   };
 }
 

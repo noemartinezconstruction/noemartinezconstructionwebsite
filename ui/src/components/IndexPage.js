@@ -1,28 +1,23 @@
 import React from "react";
+import { bindActionCreators } from "redux";
+import { connect } from "react-redux";
 import Card from "./Card";
 import { withRouter } from "react-router-dom";
+import { changeLanguage } from "../redux/actions/languagesActions";
 
 class IndexPage extends React.Component {
-  state = {
-    language: "english",
-  };
-
   changeLanguage = () => {
-    const { language } = this.state;
+    const { language, changeLang } = this.props;
     if (language === "english") {
-      return this.setState({
-        language: "spanish",
-      });
+      return changeLang("spanish");
     }
 
     if (language === "spanish") {
-      return this.setState({
-        language: "english",
-      });
+      return changeLang("english");
     }
   };
   render() {
-    const { language } = this.state;
+    const { language } = this.props;
     return (
       <div className="container">
         <div className="row">
@@ -201,4 +196,18 @@ class IndexPage extends React.Component {
   }
 }
 
-export default withRouter(IndexPage);
+function mapStateToProps(state) {
+  return {
+    language: state.languagesReducer.language,
+  };
+}
+
+function mapDispatchToProps(dispatch) {
+  return {
+    changeLang: bindActionCreators(changeLanguage, dispatch),
+  };
+}
+
+export default withRouter(
+  connect(mapStateToProps, mapDispatchToProps)(IndexPage)
+);
