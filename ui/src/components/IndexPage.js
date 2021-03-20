@@ -187,6 +187,15 @@ class IndexPage extends React.Component {
                   image="/images/textura.png"
                   style={{ width: "19rem", height: "15rem" }}
                 />
+                <Card
+                  title="Tree Cutting"
+                  titulo="Servicio de cortar arboles"
+                  language={language}
+                  text="Click to schedule service"
+                  texto="Preciona aqui para un estimado"
+                  image="/images/treecutting.jpeg"
+                  style={{ width: "19rem", height: "15rem" }}
+                />
               </div>
             </div>
           </div>
